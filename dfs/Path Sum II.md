@@ -57,26 +57,21 @@ public:
      * @ret: result vector, push path into
      * @return void
      */
-    void dfs(TreeNode *root, vector<int> &path, vector<vector<int> > &ret,
-                                                int gap) {
-        if (root == NULL) {
-            return;
-        }
-        // insert valude
+    void dfs(TreeNode *root, vector<int> &path, vector<vector<int> > &ret, int gap) {
+        // On termination
+        if (!root) return;
+
         path.push_back(root->val);
 
-        // reach Leaf
-        if (root->left == NULL && root->right == NULL) {
-            // match condition
-            if (root->val == gap) {
-                ret.push_back(path);
-            }
+        // On Matching
+        if (root->left == NULL && root->right == NULL && root->val == gap) {
+            ret.push_back(path);
         }
 
         dfs(root->left,  path, ret, gap - root->val);
         dfs(root->right, path, ret, gap - root->val);
 
-        // pop back
+        // Backtrack and remove the last element
         path.pop_back();
     }
 };
