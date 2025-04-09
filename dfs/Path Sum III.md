@@ -48,22 +48,35 @@ Return 3. The paths that sum to 8 are:
  */
 class Solution {
 public:
-    int sumNumbers(TreeNode* root) {
-        int ret = 0;
-        int subSum = 0;
-        dfs(ret, subSum, root);
-        return ret;
+    int pathSum(TreeNode* root, int sum) {
+        int count = 0;
+        dfs(root, sum,count);
+        return count;
     }
-    void dfs(int &ret, int &subSum, TreeNode *root) {
-        if (!root) return;
-        int tmp = subSum;
-        subSum = subSum* 10 + root->val;
-        if (!root->left && !root->right) {
-            ret += subSum;
+
+    void dfs(TreeNode* root, int sum, int& count) {
+        if (root == NULL) {
+            return;
         }
-        dfs(ret, subSum, root->left);
-        dfs(ret, subSum, root->right);
-        subSum = tmp;
+        // handle main
+        findpath(root, sum, count);
+        // dfs
+        dfs(root->left, sum, count);
+        dfs(root->right, sum, count);
+    }
+
+    void findpath(TreeNode* root, int sum, int& count) {
+        // quit condition
+        if(root == NULL) {
+            return;
+        }
+        // handle main
+        if(root->val == sum) {
+            ++count;
+        }
+        // dfs
+        findpath(root->left, sum-root->val, count);
+        findpath(root->right, sum-root->val, count);
     }
 };
 ```

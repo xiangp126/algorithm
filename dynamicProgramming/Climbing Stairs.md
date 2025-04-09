@@ -11,14 +11,15 @@ Each time you can either climb 1 or 2 steps. In how many distinct ways can you c
 class Solution {
 public:
     int climbStairs(int n) {
-        int ways[n + 1];
-        // note this
-        ways[0] = 1;
-        ways[1] = 1;
-        for (int i = 2; i <= n; ++i) {
-            ways[i] = ways[i - 1] + ways[i - 2];
+        if (n <= 2) return n;
+        int dp[n + 1];
+        dp[0] = 0;
+        dp[1] = 1;
+        dp[2] = 2;
+        for (int i = 3; i <= n; ++i) {
+            dp[i] = dp[i - 1] + dp[i - 2];
         }
-        return ways[n];
+        return dp[n];
     }
 };
 ```

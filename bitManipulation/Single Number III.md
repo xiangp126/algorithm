@@ -64,15 +64,17 @@ class Solution {
 public:
     vector<int> singleNumber(vector<int>& nums) {
         vector<int> ret(2, 0);
-        int tsum = 0;
+        unsigned int tsum = 0;
         for (int num : nums) {
             tsum ^= num;
         }
         // tsum = a ^ b, of which a, b is the wanted number
 
-        // n & -n returns the rightmost 1 bit in n.
-        // assume k was 0x0000 0010
-        int k = tsum & -tsum;
+        // (n & -n) returns the rightmost 1-bit in the binary representation of n
+        // Exp: k: 0x0001 0000
+        // int k = tsum & -tsum;
+        int k = tsum & (~tsum + 1); // Alternative to -tsum
+
         for (int num : nums) {
             if (num & k) {
                 ret[0] ^= num;
